@@ -1,0 +1,28 @@
+#!/bin/sh -e
+# initramfs hook for snappy netboot imager
+
+PREREQ=""
+
+# Output pre-requisites
+prereqs()
+{
+        echo "$PREREQ"
+}
+
+case "$1" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+copy_exec /bin/sync /bin
+copy_exec /bin/ping /bin
+# For some reason, netcat-openbsd doesn't work
+copy_exec /bin/nc.traditional /bin/nc
+copy_exec /bin/gunzip /bin
+copy_exec /sbin/fdisk /sbin
+copy_exec /sbin/parted /sbin
+copy_exec snappy-test-device-imager /bin
