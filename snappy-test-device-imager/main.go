@@ -60,7 +60,16 @@ func handler(resp http.ResponseWriter, req *http.Request) {
 			http.Error(resp, string(output), http.StatusBadRequest)
 			return
 		}
+		// Just do a blind call to sync
+		exec.Command("/bin/sync").Run()
 		resp.Write([]byte(string(output)))
 		return
+	}
+	if req.URL.Path == "/reboot" {
+		output, err := exec.Command("/bin/reboot").CombinedOutput()
+		if err != nil {
+			http.Error(resp, string(output), http.StatusBadRequest)
+			return
+		}
 	}
 }
