@@ -52,6 +52,10 @@ func handler(resp http.ResponseWriter, req *http.Request) {
 		}
 		ip, port := s[0], s[1]
 		dev := req.URL.Query().Get("dev")
+		if _, err := os.Stat(dev); os.IsNotExist(err) {
+			http.Error(resp, "ERROR: block device: " + dev + " does not exist", http.StatusBadRequest)
+			return
+		}
 		ddcmd := fmt.Sprintf("nc %v %v |gunzip|dd bs=16777216 of=%v", ip, port, dev)
 		cmd := "/bin/sh"
 		args := []string{"-c", ddcmd}
