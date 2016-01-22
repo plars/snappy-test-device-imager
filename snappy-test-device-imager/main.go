@@ -35,6 +35,7 @@ func main() {
 func run() error {
 	http.HandleFunc("/writeimage", writeimage)
 	http.HandleFunc("/reboot", reboot)
+	http.HandleFunc("/check", check)
 	ch := make(chan error, 2)
 	go func() {
 		ch <- http.ListenAndServe(":8989", nil)
@@ -76,4 +77,8 @@ func reboot(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, string(output), http.StatusBadRequest)
 		return
 	}
+}
+
+func check(resp http.ResponseWriter, req *http.Request) {
+	resp.Write([]byte(string("Snappy Test Device Imager")))
 }
