@@ -72,11 +72,8 @@ func writeimage(resp http.ResponseWriter, req *http.Request) {
 }
 
 func reboot(resp http.ResponseWriter, req *http.Request) {
-	output, err := exec.Command("/bin/reboot").CombinedOutput()
-	if err != nil {
-		http.Error(resp, string(output), http.StatusBadRequest)
-		return
-	}
+	go exec.Command("/bin/reboot").Run()
+	resp.Write([]byte("Rebooting target device"))
 }
 
 func check(resp http.ResponseWriter, req *http.Request) {
