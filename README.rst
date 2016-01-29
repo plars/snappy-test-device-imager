@@ -65,3 +65,11 @@ request like this::
 
 In the example above, we used /dev/sda for the target block device. Make sure
 to replace this with an appropriate block device for your target.
+
+Additional Utilities
+====================
+
+A small command line tool under utils/pxe-setup is provided for conveniently
+creating and destroying pxe config files for tftp/netboot.  It should be
+installed in the default path on your pxeboot server, and is used by
+the snappy device agent for netboot.
