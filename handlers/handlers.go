@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 Canonical Ltd
+ * Copyright (C) 2015-2016 Canonical Ltd
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -15,7 +15,7 @@
  *
  */
 
-package main
+package handlers
 
 import (
 	"fmt"
@@ -25,25 +25,7 @@ import (
 	"strings"
 )
 
-func main() {
-	if err := run(); err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
-	}
-}
-
-func run() error {
-	http.HandleFunc("/writeimage", writeimage)
-	http.HandleFunc("/reboot", reboot)
-	http.HandleFunc("/check", check)
-	ch := make(chan error, 2)
-	go func() {
-		ch <- http.ListenAndServe(":8989", nil)
-	}()
-	return <-ch
-}
-
-func writeimage(resp http.ResponseWriter, req *http.Request) {
+func WriteImage(resp http.ResponseWriter, req *http.Request) {
 	server_arg := req.URL.Query().Get("server")
 	s := strings.Split(server_arg, ":")
 	if len(s) != 2 {
@@ -71,11 +53,11 @@ func writeimage(resp http.ResponseWriter, req *http.Request) {
 	return
 }
 
-func reboot(resp http.ResponseWriter, req *http.Request) {
+func Reboot(resp http.ResponseWriter, req *http.Request) {
 	go exec.Command("/bin/reboot").Run()
 	resp.Write([]byte("Rebooting target device"))
 }
 
-func check(resp http.ResponseWriter, req *http.Request) {
+func Check(resp http.ResponseWriter, req *http.Request) {
 	resp.Write([]byte(string("Snappy Test Device Imager")))
 }
