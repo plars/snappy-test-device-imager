@@ -45,7 +45,7 @@ menuentry "netboot" {
 
 menuentry "local disk" {
     insmod chain
-    set root=(hd0,2)
+    set root=(hd0,1)
     chainloader (${root})/EFI/boot/grubx64.efi
     boot
 }"""
