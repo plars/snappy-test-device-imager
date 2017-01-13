@@ -16,7 +16,8 @@ already.
 To build the go binary, simply cd to the snappy-test-device-imager directory
 under this project, and type::
 
-	$ go build
+    $ go get github.com/plars/snappy-test-device-imager/...
+    $ go build github.com/plars/snappy-test-device-imager/...
 
 If everything worked properly, you should be left with a binary named
 'snappy-test-device-imager' in that directory.
