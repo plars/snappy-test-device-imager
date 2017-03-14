@@ -27,6 +27,7 @@ func main() {
 	http.HandleFunc("/writeimage", handlers.WriteImage)
 	http.HandleFunc("/reboot", handlers.Reboot)
 	http.HandleFunc("/check", handlers.Check)
+	http.HandleFunc("/run", handlers.Runcmd)
 
 	log.Fatal(http.ListenAndServe(":8989", nil))
 }

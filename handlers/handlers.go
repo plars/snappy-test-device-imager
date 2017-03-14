@@ -47,8 +47,9 @@ func WriteImage(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, string(output), http.StatusBadRequest)
 		return
 	}
-	// Just do a blind call to sync
+	// Just do a blind call to sync and hdparm -z
 	exec.Command("/bin/sync").Run()
+	exec.Command("/sbin/hdparm", "-z", dev).Run()
 	resp.Write([]byte(string(output)))
 	return
 }
@@ -60,4 +61,16 @@ func Reboot(resp http.ResponseWriter, req *http.Request) {
 
 func Check(resp http.ResponseWriter, req *http.Request) {
 	resp.Write([]byte(string("Snappy Test Device Imager")))
+}
+
+func Runcmd(resp http.ResponseWriter, req *http.Request) {
+    cmd_arg := req.URL.Query().Get("cmd")
+    cmd := strings.Fields(cmd_arg)
+	output, err := exec.Command(cmd[0], cmd[1:len(cmd)]...).CombinedOutput()
+	if err != nil {
+		http.Error(resp, string(output), http.StatusBadRequest)
+		return
+	}
+	resp.Write([]byte(string(output)))
+    return
 }
