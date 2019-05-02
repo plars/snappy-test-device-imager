@@ -39,7 +39,7 @@ func WriteImage(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, "ERROR: block device: " + dev + " does not exist", http.StatusBadRequest)
 		return
 	}
-	ddcmd := fmt.Sprintf("nc %v %v |gunzip|dd bs=16777216 of=%v", ip, port, dev)
+	ddcmd := fmt.Sprintf("nc %v %v |xzcat |dd bs=16777216 of=%v", ip, port, dev)
 	cmd := "/bin/sh"
 	args := []string{"-c", ddcmd}
 	output, err := exec.Command(cmd, args...).CombinedOutput()

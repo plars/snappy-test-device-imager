@@ -23,9 +23,12 @@ copy_exec /bin/ping /bin
 # For some reason, netcat-openbsd doesn't work
 copy_exec /bin/nc.traditional /bin/nc
 copy_exec /bin/gunzip /bin
+copy_exec /usr/bin/xz /bin
+copy_exec /usr/bin/xzcat /bin
 copy_exec /sbin/fdisk /sbin
 copy_exec /sbin/parted /sbin
 copy_exec /sbin/hdparm /sbin
 copy_exec /sbin/fatlabel /sbin
 copy_exec snappy-test-device-imager /bin
 copy_exec /bin/busybox /bin/busybox2
+copy_exec /bin/efibootmgr /bin/efibootmgr
